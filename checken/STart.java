@@ -9,7 +9,7 @@ import javax.swing.*;
 
 public class STart extends JFrame {
 
-    Cheaken md = new Cheaken();
+   
 
     public static void main(String[] args) {
         new STart(new Cheaken());
@@ -19,17 +19,23 @@ public class STart extends JFrame {
         GLCanvas glcanvas;
         Animator animator;
 
-        AnimListener listener = aListener;
+        Cheaken md = new Cheaken();
         glcanvas = new GLCanvas();
 
-        glcanvas.addGLEventListener(listener);
-        glcanvas.addKeyListener(listener);
-        getContentPane().add(glcanvas, BorderLayout.CENTER);
+        glcanvas.addGLEventListener(md);
+        glcanvas.addMouseListener(md);
+        glcanvas.addKeyListener(md);
+        md.setGLCanvas(glcanvas);
+        
+        
+        add(glcanvas, BorderLayout.CENTER);
+        
+        
         animator = new FPSAnimator(15);
         animator.add(glcanvas);
         animator.start();
-        glcanvas.addMouseListener(md);
-        md.setGLCanvas(glcanvas);
+
+        
         setTitle("Anim Test");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(700, 700);

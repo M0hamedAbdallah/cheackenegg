@@ -33,7 +33,7 @@ import javax.media.opengl.glu.GLU;
 public class Cheaken extends AnimListener implements GLEventListener, MouseListener {
 
     int xOfSell = 300;
-    String textureName[] = {"level1.png", "ner5.png", "egg1.png"};
+    String textureName[] = {"hom.png","level1.png", "ner5.png", "egg1.png","how.png"};
     TextureReader.Texture texture;
     int textureIndex[] = new int[textureName.length];
     
@@ -53,7 +53,7 @@ public class Cheaken extends AnimListener implements GLEventListener, MouseListe
     ///end time
     
     ///switch
-    boolean home=false;
+    boolean home=true;
     boolean singlePlayer=false;
     boolean maltiyPlayer=false;
     boolean info=false;
@@ -157,10 +157,9 @@ public class Cheaken extends AnimListener implements GLEventListener, MouseListe
     public void squreOfHome(GL gl, int index) {
         gl.glEnable(GL.GL_BLEND);	// Turn Blending On
         gl.glBindTexture(GL.GL_TEXTURE_2D, textureIndex[index]);
-
+        
         gl.glPushMatrix();
-
-//        gl.glTranslated(x, y, 0);
+        
         gl.glBegin(GL.GL_QUADS);
 
         // Front Face
@@ -171,10 +170,10 @@ public class Cheaken extends AnimListener implements GLEventListener, MouseListe
         gl.glVertex3f(700, 0f, -1.0f);
 
         gl.glTexCoord2f(1.0f, 1.0f);
-        gl.glVertex3f(700f, 600, -1.0f);
+        gl.glVertex3f(700f, 700f, -1.0f);
 
         gl.glTexCoord2f(0.0f, 1.0f);
-        gl.glVertex3f(0f, 600, -1.0f);
+        gl.glVertex3f(0f, 700f, -1.0f);
 
         gl.glEnd();
         gl.glPopMatrix();
@@ -225,10 +224,22 @@ public class Cheaken extends AnimListener implements GLEventListener, MouseListe
             GL gl = gld.getGL();
             gl.glClear(GL.GL_COLOR_BUFFER_BIT);       //Clear The Screen And The Depth Buffer
             handleKeyPress();
-            squreOfHome(gl, 0);
-            squreOFegg(gl, 2);
-            squreOFsell(gl, 1);
-            DrawTime();
+            if(home){
+                squreOfHome(gl, 0);
+            }
+            if(singlePlayer){
+                squreOfHome(gl, 1);
+                squreOFegg(gl, 3);
+                squreOFsell(gl, 2);
+                DrawTime();
+            }
+            if(maltiyPlayer){
+                
+            }
+            if(info){
+                squreOfHome(gl, 4);
+            }
+            
         } catch (ParseException ex) {
             
         }
@@ -265,12 +276,37 @@ public class Cheaken extends AnimListener implements GLEventListener, MouseListe
     public boolean isKeyPressed(final int keyCode) {
         return keyBits.get(keyCode);
     }
-
+    int mx;
+    int my;
     @Override
     public void mouseClicked(MouseEvent e) {
-        int mx = e.getX();
-        int my = e.getY();
+        mx = e.getX();
+        my = e.getY();
         System.out.println(mx + " " + my);
+       if(home){
+            if((mx>80&&mx<260)&&(my>(90)&&my<(180))){
+                System.out.println("one player");
+                home=false;
+                singlePlayer=true;
+            }
+            
+            if((mx>80&&mx<260)&&(my>(200)&&my<(300))){
+                System.out.println("two player");
+            }
+            
+            if((mx>80&&mx<260)&&(my>(325)&&my<(418))){
+                System.out.println("info");
+                home=false;
+                singlePlayer=false;
+                maltiyPlayer=false;
+                info=true;
+            }
+            
+             if((mx>80&&mx<260)&&(my>(441)&&my<(534))){
+                System.out.println("exit");
+                System.exit(0);
+            }
+        }
     }
 
     public void handleKeyPress() {
