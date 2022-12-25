@@ -11,6 +11,8 @@ import java.awt.Font;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -25,6 +27,8 @@ import javax.media.opengl.GLAutoDrawable;
 import javax.media.opengl.GLCanvas;
 import javax.media.opengl.GLEventListener;
 import javax.media.opengl.glu.GLU;
+import sun.audio.AudioPlayer;
+import sun.audio.AudioStream;
 
 /**
  *
@@ -33,33 +37,38 @@ import javax.media.opengl.glu.GLU;
 public class Cheaken extends AnimListener implements GLEventListener, MouseListener {
 
     int xOfSell = 300;
-    String textureName[] = {"hom.png","level1.png", "ner5.png", "egg1.png","how.png"};
+    String textureName[] = {"hom.png", "level1.png", "ner5.png", "egg1.png", "how.png"};
     TextureReader.Texture texture;
     int textureIndex[] = new int[textureName.length];
-    
+    ///music
+    FileInputStream music;
+    private AudioStream audios;
+    boolean musicOn = true;
+    ///endmusic
     ////egg
     int egg[] = {
         160, 335, 509
     };
     int eggy = 450;
-    int number = new Random().nextInt(3);;
+    int number = new Random().nextInt(3);
+    ;
     int eggx = egg[number];
     ///end egg
-    
+
     ///time
     String time = java.time.LocalTime.now() + "";
     GLAutoDrawable gldddd;
     TextRenderer renderer = new TextRenderer(new Font("SanasSerif", Font.BOLD, 20));
     ///end time
-    
+
     ///switch
-    boolean home=true;
-    boolean singlePlayer=false;
-    boolean maltiyPlayer=false;
-    boolean info=false;
-    boolean exit=false;
+    boolean home = true;
+    boolean singlePlayer = false;
+    boolean maltiyPlayer = false;
+    boolean info = false;
+    boolean exit = false;
     ///end switch
-    
+
     public void DrawTime() throws ParseException {
 
         String time1 = time;
@@ -80,7 +89,7 @@ public class Cheaken extends AnimListener implements GLEventListener, MouseListe
         renderer.draw(fi, 600, 620);
         renderer.endRendering();
     }
-    
+
     public void squreOFsell(GL gl, int index) {
 
         gl.glEnable(GL.GL_BLEND);	// Turn Blending On
@@ -110,28 +119,28 @@ public class Cheaken extends AnimListener implements GLEventListener, MouseListe
 
         gl.glDisable(GL.GL_BLEND);
     }
-    
-    private int rand(){
+
+    private int rand() {
         Random rand = new Random();
-        return  rand.nextInt(3);
+        return rand.nextInt(3);
     }
 
     public void squreOFegg(GL gl, int index) {
         gl.glEnable(GL.GL_BLEND);	// Turn Blending On
         gl.glBindTexture(GL.GL_TEXTURE_2D, textureIndex[index]);
-        
-        if(eggy==70 && (((eggx-50)<xOfSell)&&((eggx+50)>xOfSell))){
-            number=rand();
-            eggy=450;
+
+        if (eggy == 70 && (((eggx - 50) < xOfSell) && ((eggx + 50) > xOfSell))) {
+            number = rand();
+            eggy = 450;
         }
-        if(eggy==0){
-            number=rand();
-            eggy=450;
+        if (eggy == 0) {
+            number = rand();
+            eggy = 450;
         }
         System.out.println(number);
         eggx = egg[number];
         gl.glPushMatrix();
-        eggy=eggy-5;
+        eggy = eggy - 5;
         gl.glTranslated(eggx, eggy, 0);
         gl.glBegin(GL.GL_QUADS);
 
@@ -157,9 +166,9 @@ public class Cheaken extends AnimListener implements GLEventListener, MouseListe
     public void squreOfHome(GL gl, int index) {
         gl.glEnable(GL.GL_BLEND);	// Turn Blending On
         gl.glBindTexture(GL.GL_TEXTURE_2D, textureIndex[index]);
-        
+
         gl.glPushMatrix();
-        
+
         gl.glBegin(GL.GL_QUADS);
 
         // Front Face
@@ -189,6 +198,14 @@ public class Cheaken extends AnimListener implements GLEventListener, MouseListe
         gl.glMatrixMode(GL.GL_PROJECTION);
 //        gl.glOrtho(-450, 450, -250, 250, -1.0, 1.0);
         gl.glOrtho(0, 700, 0, 700, -1.0, 1.0);
+        
+        try {
+            music = new FileInputStream(new File("Music//chicken dance song.wav"));
+            audios = new AudioStream(music);
+        } catch (IOException ex) {
+            System.err.println(ex.getMessage());
+        }
+        AudioPlayer.player.start(audios);
 
         gl.glEnable(GL.GL_TEXTURE_2D);  // Enable Texture Mapping
         gl.glBlendFunc(GL.GL_SRC_ALPHA, GL.GL_ONE_MINUS_SRC_ALPHA);
@@ -224,24 +241,24 @@ public class Cheaken extends AnimListener implements GLEventListener, MouseListe
             GL gl = gld.getGL();
             gl.glClear(GL.GL_COLOR_BUFFER_BIT);       //Clear The Screen And The Depth Buffer
             handleKeyPress();
-            if(home){
+            if (home) {
                 squreOfHome(gl, 0);
             }
-            if(singlePlayer){
+            if (singlePlayer) {
                 squreOfHome(gl, 1);
                 squreOFegg(gl, 3);
                 squreOFsell(gl, 2);
                 DrawTime();
             }
-            if(maltiyPlayer){
-                
+            if (maltiyPlayer) {
+
             }
-            if(info){
+            if (info) {
                 squreOfHome(gl, 4);
             }
-            
+
         } catch (ParseException ex) {
-            
+
         }
     }
 
@@ -278,33 +295,45 @@ public class Cheaken extends AnimListener implements GLEventListener, MouseListe
     }
     int mx;
     int my;
+
     @Override
     public void mouseClicked(MouseEvent e) {
         mx = e.getX();
         my = e.getY();
         System.out.println(mx + " " + my);
-       if(home){
-            if((mx>80&&mx<260)&&(my>(90)&&my<(180))){
+        if (home) {
+            if ((mx > 80 && mx < 260) && (my > (90) && my < (180))) {
                 System.out.println("one player");
-                home=false;
-                singlePlayer=true;
+                home = false;
+                singlePlayer = true;
             }
-            
-            if((mx>80&&mx<260)&&(my>(200)&&my<(300))){
+
+            if ((mx > 80 && mx < 260) && (my > (200) && my < (300))) {
                 System.out.println("two player");
             }
-            
-            if((mx>80&&mx<260)&&(my>(325)&&my<(418))){
+
+            if ((mx > 80 && mx < 260) && (my > (325) && my < (418))) {
                 System.out.println("info");
-                home=false;
-                singlePlayer=false;
-                maltiyPlayer=false;
-                info=true;
+                home = false;
+                singlePlayer = false;
+                maltiyPlayer = false;
+                info = true;
             }
-            
-             if((mx>80&&mx<260)&&(my>(441)&&my<(534))){
+
+            if ((mx > 80 && mx < 260) && (my > (441) && my < (534))) {
                 System.out.println("exit");
                 System.exit(0);
+            }
+            
+            if ((mx > 613 && mx < 662) && (my > (49) && my < (103))) {
+                System.out.println("sound");
+                if(musicOn){
+                    musicOn=false;
+                    AudioPlayer.player.stop(audios);
+                }else{
+                    musicOn=true;
+                    AudioPlayer.player.start(audios);
+                }
             }
         }
     }
