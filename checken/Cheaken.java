@@ -158,6 +158,16 @@ public class Cheaken extends AnimListener implements GLEventListener, MouseListe
         renderer.draw(fi, 550, 620);
         renderer.endRendering();
     }
+        public void DrawScore() throws ParseException {
+
+        String fi = "Score: " + Score + "                                     Live: " + counter;
+        if (maltiyPlayer) {
+            fi = "Score Of Player1: " + Score + "                           Score Of Player2: " + Score2;
+        }
+        renderer.beginRendering(gldddd.getWidth(), gldddd.getHeight());
+        renderer.draw(fi, 10, 600);
+        renderer.endRendering();
+    }
 
    
 
