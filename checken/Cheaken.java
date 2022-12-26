@@ -109,26 +109,7 @@ public class Cheaken extends AnimListener implements GLEventListener, MouseListe
     int Score2;
     ///end player
 
-    public void DrawTime() throws ParseException {
-
-        String time1 = time;
-        String time2 = java.time.LocalTime.now() + "";
-
-        SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
-        Date date1 = format.parse(time1);
-        Date date2 = format.parse(time2);
-        long difference = date2.getTime() - date1.getTime();
-
-        String fi = String.format("%02d:%02d",
-                TimeUnit.MILLISECONDS.toMinutes(difference),
-                TimeUnit.MILLISECONDS.toSeconds(difference)
-                - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(difference))
-        );
-
-        renderer.beginRendering(gldddd.getWidth(), gldddd.getHeight());
-        renderer.draw(fi, 600, 620);
-        renderer.endRendering();
-    }
+   
 
     public void squreOFsell(GL gl, int index) {
 
