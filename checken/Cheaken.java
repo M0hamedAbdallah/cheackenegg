@@ -1,6 +1,5 @@
 
 package checken;
-
 import Textures.AnimListener;
 import Textures.TextureReader;
 import com.sun.opengl.util.j2d.TextRenderer;
@@ -33,8 +32,20 @@ import sun.audio.AudioStream;
  */
 public class Cheaken extends AnimListener implements GLEventListener, MouseListener {
 
-    int xOfSell = 300;
-    String textureName[] = {"hom.png", "level1.png", "ner5.png", "egg1.png", "how.png"};
+    int mx;
+    int my;
+    int xOfSell = 250;
+    int xOfSell2 = 450;
+    int counter = 5;
+//    int moveSpeedEasy=5;
+//    int moveSpeedMediam=10;
+//    int moveSpeedHard=5;
+    String textureName[] = {
+        "hom.png", "level1.png", "ner55.png", "egg2.png", "how.png",
+        "EMH.png", "level2.png", "level3.png", "twoplayer.png",
+        "loselevel1.png", "loswlevel2.png", "loselevel3.png"
+        ,"playeronewin.png","PlayerTwoWin.png"
+    };
     TextureReader.Texture texture;
     int textureIndex[] = new int[textureName.length];
     ///music
@@ -42,20 +53,36 @@ public class Cheaken extends AnimListener implements GLEventListener, MouseListe
     private AudioStream audios;
     boolean musicOn = true;
     ///endmusic
+
     ////egg
-    int egg[] = {
+    int eggEasy[] = {
         160, 335, 509
     };
+    int eggMediam[] = {
+        115, 264, 415, 560
+    };
+    int eggHard[] = {
+        135, 236, 336, 441, 546
+    };
+    int eggPlayerOne[] = {
+        71, 175, 274
+    };
+    int eggPlayerTwo[]={
+        397, 498, 602
+    };
     int eggy = 450;
+    int eggy2 = 450;
     int number = new Random().nextInt(3);
-    ;
-    int eggx = egg[number];
+    int number2 = new Random().nextInt(3);
+    int eggx = eggEasy[number];
+    int eggx2 = eggPlayerTwo[number];
     ///end egg
 
     ///time
-    String time = java.time.LocalTime.now() + "";
+    String time;
     GLAutoDrawable gldddd;
     TextRenderer renderer = new TextRenderer(new Font("SanasSerif", Font.BOLD, 20));
+    TextRenderer renderer1 = new TextRenderer(new Font("Ubuntu", Font.BOLD, 30));
     ///end time
 
     ///switch
@@ -63,8 +90,24 @@ public class Cheaken extends AnimListener implements GLEventListener, MouseListe
     boolean singlePlayer = false;
     boolean maltiyPlayer = false;
     boolean info = false;
-    boolean exit = false;
+    //
+    boolean easy = false;
+    boolean mediam = false;
+    boolean hard = false;
+    //
+    boolean left=false;
+    boolean Right=false;
+    //
+    boolean end1 = false;
+    boolean end2 = false;
+    boolean end3 = false;
     ///end switch
+
+    ///player name
+    String name;
+    int Score;
+    int Score2;
+    ///end player
 
     public void DrawTime() throws ParseException {
 
