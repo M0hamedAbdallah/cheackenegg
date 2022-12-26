@@ -333,8 +333,6 @@ public class Cheaken extends AnimListener implements GLEventListener, MouseListe
     public boolean isKeyPressed(final int keyCode) {
         return keyBits.get(keyCode);
     }
-    int mx;
-    int my;
 
     @Override
     public void mouseClicked(MouseEvent e) {
