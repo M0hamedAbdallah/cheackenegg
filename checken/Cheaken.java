@@ -37,9 +37,9 @@ public class Cheaken extends AnimListener implements GLEventListener, MouseListe
     int xOfSell = 250;
     int xOfSell2 = 450;
     int counter = 5;
-    int moveSpeedEasy=5;
-    int moveSpeedMediam=10;
-    int moveSpeedHard=15;
+//    int moveSpeedEasy=5;
+//    int moveSpeedMediam=10;
+//    int moveSpeedHard=5;
     String textureName[] = {
         "hom.png", "level1.png", "ner55.png", "egg2.png", "how.png",
         "EMH.png", "level2.png", "level3.png", "twoplayer.png",
@@ -130,13 +130,22 @@ public class Cheaken extends AnimListener implements GLEventListener, MouseListe
         renderer.endRendering();
     }
 
-    public void squreOFsell(GL gl, int index) {
-
+ public void squreOFsell(GL gl, int index) {
         gl.glEnable(GL.GL_BLEND);	// Turn Blending On
         gl.glBindTexture(GL.GL_TEXTURE_2D, textureIndex[index]);
 
         gl.glPushMatrix();
-
+        if (xOfSell <= 0) {
+            xOfSell = 0;
+        }
+        if (xOfSell >= 600) {
+            xOfSell = 600;
+        }
+        if (maltiyPlayer) {
+            if (xOfSell >= 250) {
+                xOfSell = 250;
+            }
+        }
         gl.glTranslated(xOfSell, 50, 0);
 
         gl.glBegin(GL.GL_QUADS);
