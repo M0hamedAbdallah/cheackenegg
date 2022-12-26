@@ -37,9 +37,9 @@ public class Cheaken extends AnimListener implements GLEventListener, MouseListe
     int xOfSell = 250;
     int xOfSell2 = 450;
     int counter = 5;
-//    int moveSpeedEasy=5;
-//    int moveSpeedMediam=10;
-//    int moveSpeedHard=5;
+    int moveSpeedEasy=5;
+    int moveSpeedMediam=10;
+    int moveSpeedHard=15;
     String textureName[] = {
         "hom.png", "level1.png", "ner55.png", "egg2.png", "how.png",
         "EMH.png", "level2.png", "level3.png", "twoplayer.png",
