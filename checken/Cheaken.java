@@ -169,19 +169,69 @@ public class Cheaken extends AnimListener implements GLEventListener, MouseListe
         gl.glEnable(GL.GL_BLEND);	// Turn Blending On
         gl.glBindTexture(GL.GL_TEXTURE_2D, textureIndex[index]);
 
-        if (eggy == 70 && (((eggx - 50) < xOfSell) && ((eggx + 50) > xOfSell))) {
-            number = rand();
-            eggy = 450;
+        if ((eggy > 80 && eggy < 95) && (((eggx - 85) < xOfSell) && ((eggx + 35) > xOfSell))) {
+            if (easy) {
+                number = rand(2);
+                eggy = 450;
+            }
+            if (mediam) {
+                number = rand(3);
+                eggy = 390;
+            }
+            if (hard) {
+                number = rand(4);
+                eggy = 390;
+            }
+            if (maltiyPlayer) {
+                number = rand(2);
+                eggy = 450;
+            }
+            Score = Score + 10;
         }
-        if (eggy == 0) {
-            number = rand();
-            eggy = 450;
+        if (eggy <= 0) {
+            if (easy) {
+                number = rand(2);
+                eggy = 450;
+            }
+            if (mediam) {
+                number = rand(3);
+                eggy = 390;
+            }
+            if (hard) {
+                number = rand(4);
+                eggy = 390;
+            }
+            if (maltiyPlayer) {
+                number = rand(2);
+                eggy = 450;
+            }
+            counter--;
         }
-        System.out.println(number);
-        eggx = egg[number];
-        gl.glPushMatrix();
-        eggy = eggy - 5;
-        gl.glTranslated(eggx, eggy, 0);
+
+        if (easy) {
+            eggx = eggEasy[number];
+            gl.glPushMatrix();
+            eggy = eggy - moveSpeedEasy;
+            gl.glTranslated(eggx, eggy, 0);
+        }
+        if (mediam) {
+            eggx = eggMediam[number];
+            gl.glPushMatrix();
+            eggy = eggy - moveSpeedMediam;
+            gl.glTranslated(eggx, eggy, 0);
+        }
+        if (hard) {
+            eggx = eggHard[number];
+            gl.glPushMatrix();
+            eggy = eggy - moveSpeedHard;
+            gl.glTranslated(eggx, eggy, 0);
+        }
+        if (maltiyPlayer) {
+            eggx = eggPlayerOne[number];
+            gl.glPushMatrix();
+            eggy = eggy - 5;
+            gl.glTranslated(eggx, eggy, 0);
+        }
         gl.glBegin(GL.GL_QUADS);
 
         // Front Face
