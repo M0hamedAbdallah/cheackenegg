@@ -111,13 +111,22 @@ public class Cheaken extends AnimListener implements GLEventListener, MouseListe
 
    
 
-    public void squreOFsell(GL gl, int index) {
-
+ public void squreOFsell(GL gl, int index) {
         gl.glEnable(GL.GL_BLEND);	// Turn Blending On
         gl.glBindTexture(GL.GL_TEXTURE_2D, textureIndex[index]);
 
         gl.glPushMatrix();
-
+        if (xOfSell <= 0) {
+            xOfSell = 0;
+        }
+        if (xOfSell >= 600) {
+            xOfSell = 600;
+        }
+        if (maltiyPlayer) {
+            if (xOfSell >= 250) {
+                xOfSell = 250;
+            }
+        }
         gl.glTranslated(xOfSell, 50, 0);
 
         gl.glBegin(GL.GL_QUADS);
@@ -463,78 +472,39 @@ public class Cheaken extends AnimListener implements GLEventListener, MouseListe
         mx = e.getX();
         my = e.getY();
         System.out.println(mx + " " + my);
-        if(left || Right){
-            if ((mx > 509 && mx < 645) && (my > (524) && my < (594))) {
-                System.out.println("return");
-                left=false;
-                Right=false;
-                home=true;
-            }  
-        }
         if (home) {
             if ((mx > 80 && mx < 260) && (my > (90) && my < (180))) {
                 System.out.println("one player");
                 home = false;
                 singlePlayer = true;
-            } else if ((mx > 80 && mx < 260) && (my > (200) && my < (300))) {
+            }
+
+            if ((mx > 80 && mx < 260) && (my > (200) && my < (300))) {
                 System.out.println("two player");
-                time = java.time.LocalTime.now() + "";
-                home = false;
-                maltiyPlayer = true;
-            } else if ((mx > 80 && mx < 260) && (my > (325) && my < (418))) {
+            }
+
+            if ((mx > 80 && mx < 260) && (my > (325) && my < (418))) {
                 System.out.println("info");
                 home = false;
+                singlePlayer = false;
+                maltiyPlayer = false;
                 info = true;
-            } else if ((mx > 80 && mx < 260) && (my > (441) && my < (534))) {
+            }
+
+            if ((mx > 80 && mx < 260) && (my > (441) && my < (534))) {
                 System.out.println("exit");
                 System.exit(0);
-            } else if ((mx > 613 && mx < 662) && (my > (49) && my < (103))) {
+            }
+            
+            if ((mx > 613 && mx < 662) && (my > (49) && my < (103))) {
                 System.out.println("sound");
-                if (musicOn) {
-                    musicOn = false;
+                if(musicOn){
+                    musicOn=false;
                     AudioPlayer.player.stop(audios);
-                } else {
-                    musicOn = true;
+                }else{
+                    musicOn=true;
                     AudioPlayer.player.start(audios);
                 }
-            }
-        } else if (singlePlayer) {
-            if ((mx > 55 && mx < 120) && (my > (54) && my < (131))) {
-                System.out.println("return");
-                home = true;
-                singlePlayer = false;
-            } else if ((mx > 222 && mx < 458) && (my > (129) && my < (254))) {
-                System.out.println("easy");
-                time = java.time.LocalTime.now() + "";
-                easy = true;
-                singlePlayer = false;
-            } else if ((mx > 222 && mx < 458) && (my > (290) && my < (413))) {
-                System.out.println("medium");
-                time = java.time.LocalTime.now() + "";
-                eggy = 390;
-                mediam = true;
-                singlePlayer = false;
-            } else if ((mx > 222 && mx < 458) && (my > (441) && my < (565))) {
-                System.out.println("hard");
-                time = java.time.LocalTime.now() + "";
-                eggy = 390;
-                hard = true;
-                singlePlayer = false;
-            }
-        } else if (info) {
-            if ((mx > 553 && mx < 620) && (my > (523) && my < (596))) {
-                System.out.println("return");
-                home = true;
-                info = false;
-            }
-        } else if (end1 || end2 || end3) {
-            if ((mx > 509 && mx < 645) && (my > (524) && my < (594))) {
-                System.out.println("return");
-                home = true;
-                end1 = false;
-                end2 = false;
-                end3 = false;
-                counter = 5;
             }
         }
     }
