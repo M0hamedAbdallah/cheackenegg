@@ -108,6 +108,56 @@ public class Cheaken extends AnimListener implements GLEventListener, MouseListe
     int Score;
     int Score2;
     ///end player
+  public void DrawTime() throws ParseException {
+
+        String time1 = time;
+        String time2 = java.time.LocalTime.now() + "";
+
+        SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
+        Date date1 = format.parse(time1);
+        Date date2 = format.parse(time2);
+        long difference = date2.getTime() - date1.getTime();
+
+        String fi = String.format("Time:%02d:%02d",
+                TimeUnit.MILLISECONDS.toMinutes(difference),
+                TimeUnit.MILLISECONDS.toSeconds(difference) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(difference))
+        );
+        if(easy){
+            if ("Time:01:00".equals(fi)){
+            
+            }
+        }
+        if(mediam){
+             if ("Time:01:00".equals(fi)){
+            
+            }
+        }
+        if(hard){
+             if ("Time:01:00".equals(fi)){
+            
+            }
+        }
+        if(maltiyPlayer){
+            if ("Time:01:00".equals(fi)){
+                if(Score>Score2){
+                    maltiyPlayer=false;
+                    left=true;
+                }
+                else if(Score==Score2){
+                    maltiyPlayer=false;
+                    home=true;
+                }
+                else{
+                    maltiyPlayer=false;
+                    Right=true;
+                }
+            }
+        }
+
+        renderer.beginRendering(gldddd.getWidth(), gldddd.getHeight());
+        renderer.draw(fi, 550, 620);
+        renderer.endRendering();
+    }
 
    
 
@@ -312,57 +362,7 @@ public class Cheaken extends AnimListener implements GLEventListener, MouseListe
 
         gl.glDisable(GL.GL_BLEND);
     }
-     public void DrawTime() throws ParseException {
-
-        String time1 = time;
-        String time2 = java.time.LocalTime.now() + "";
-
-        SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
-        Date date1 = format.parse(time1);
-        Date date2 = format.parse(time2);
-        long difference = date2.getTime() - date1.getTime();
-
-        String fi = String.format("Time:%02d:%02d",
-                TimeUnit.MILLISECONDS.toMinutes(difference),
-                TimeUnit.MILLISECONDS.toSeconds(difference) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(difference))
-        );
-        if(easy){
-            if ("Time:01:00".equals(fi)){
-            
-            }
-        }
-        if(mediam){
-             if ("Time:01:00".equals(fi)){
-            
-            }
-        }
-        if(hard){
-             if ("Time:01:00".equals(fi)){
-            
-            }
-        }
-        if(maltiyPlayer){
-            if ("Time:01:00".equals(fi)){
-                if(Score>Score2){
-                    maltiyPlayer=false;
-                    left=true;
-                }
-                else if(Score==Score2){
-                    maltiyPlayer=false;
-                    home=true;
-                }
-                else{
-                    maltiyPlayer=false;
-                    Right=true;
-                }
-            }
-        }
-
-        renderer.beginRendering(gldddd.getWidth(), gldddd.getHeight());
-        renderer.draw(fi, 550, 620);
-        renderer.endRendering();
-    }
-
+   
     @Override
     public void init(GLAutoDrawable gld) {
         GL gl = gld.getGL();
