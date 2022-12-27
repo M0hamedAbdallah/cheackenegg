@@ -168,6 +168,13 @@ public class Cheaken extends AnimListener implements GLEventListener, MouseListe
         renderer.draw(fi, 10, 600);
         renderer.endRendering();
     }
+public void DrawName() throws ParseException {
+        int score = this.Score;
+        String fi = "The Score Of "+name+" is "+score;
+        renderer1.beginRendering(gldddd.getWidth(), gldddd.getHeight());
+        renderer1.draw(fi, 50, 50);
+        renderer1.endRendering();
+    }
 
    public void squreOFsell2(GL gl, int index) {
         gl.glEnable(GL.GL_BLEND);	// Turn Blending On
