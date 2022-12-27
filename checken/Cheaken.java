@@ -169,7 +169,39 @@ public class Cheaken extends AnimListener implements GLEventListener, MouseListe
         renderer.endRendering();
     }
 
-   
+   public void squreOFsell2(GL gl, int index) {
+        gl.glEnable(GL.GL_BLEND);	// Turn Blending On
+        gl.glBindTexture(GL.GL_TEXTURE_2D, textureIndex[index]);
+
+        gl.glPushMatrix();
+        if (xOfSell2 <= 350) {
+            xOfSell2 = 350;
+        }
+        if (xOfSell2 >= 600) {
+            xOfSell2 = 600;
+        }
+        gl.glTranslated(xOfSell2, 50, 0);
+
+        gl.glBegin(GL.GL_QUADS);
+
+        // Front Face
+        gl.glTexCoord2f(0.0f, 0.0f);
+        gl.glVertex3f(0f, 0f, -1.0f);
+
+        gl.glTexCoord2f(1.0f, 0.0f);
+        gl.glVertex3f(100, 0f, -1.0f);
+
+        gl.glTexCoord2f(1.0f, 1.0f);
+        gl.glVertex3f(100f, 70, -1.0f);
+
+        gl.glTexCoord2f(0.0f, 1.0f);
+        gl.glVertex3f(0f, 70, -1.0f);
+
+        gl.glEnd();
+        gl.glPopMatrix();
+
+        gl.glDisable(GL.GL_BLEND);
+    }
 
  public void squreOFsell(GL gl, int index) {
         gl.glEnable(GL.GL_BLEND);	// Turn Blending On
