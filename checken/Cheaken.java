@@ -1,5 +1,6 @@
 
 package checken;
+
 import Textures.AnimListener;
 import Textures.TextureReader;
 import com.sun.opengl.util.j2d.TextRenderer;
@@ -37,14 +38,14 @@ public class Cheaken extends AnimListener implements GLEventListener, MouseListe
     int xOfSell = 250;
     int xOfSell2 = 450;
     int counter = 5;
-    int moveSpeedEasy=5;
-    int moveSpeedMediam=10;
-    int moveSpeedHard=15;
+    int moveSpeedEasy = 5;
+    int moveSpeedMediam = 10;
+    int moveSpeedHard = 15;
     String textureName[] = {
         "hom.png", "level1.png", "ner55.png", "egg2.png", "how.png",
         "EMH.png", "level2.png", "level3.png", "twoplayer.png",
-        "loselevel1.png", "loswlevel2.png", "loselevel3.png"
-        ,"playeronewin.png","PlayerTwoWin.png"
+        "loselevel1.png", "loswlevel2.png", "loselevel3.png",
+        "playeronewin.png", "PlayerTwoWin.png","Draw.png"
     };
     TextureReader.Texture texture;
     int textureIndex[] = new int[textureName.length];
@@ -67,7 +68,7 @@ public class Cheaken extends AnimListener implements GLEventListener, MouseListe
     int eggPlayerOne[] = {
         71, 175, 274
     };
-    int eggPlayerTwo[]={
+    int eggPlayerTwo[] = {
         397, 498, 602
     };
     int eggy = 450;
@@ -95,8 +96,10 @@ public class Cheaken extends AnimListener implements GLEventListener, MouseListe
     boolean mediam = false;
     boolean hard = false;
     //
-    boolean left=false;
-    boolean Right=false;
+    boolean left = false;
+    boolean Right = false;
+    boolean Draw = false;
+    
     //
     boolean end1 = false;
     boolean end2 = false;
@@ -107,8 +110,9 @@ public class Cheaken extends AnimListener implements GLEventListener, MouseListe
     String name;
     int Score;
     int Score2;
+
     ///end player
-  public void DrawTime() throws ParseException {
+    public void DrawTime() throws ParseException {
 
         String time1 = time;
         String time2 = java.time.LocalTime.now() + "";
@@ -122,34 +126,50 @@ public class Cheaken extends AnimListener implements GLEventListener, MouseListe
                 TimeUnit.MILLISECONDS.toMinutes(difference),
                 TimeUnit.MILLISECONDS.toSeconds(difference) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(difference))
         );
-        if(easy){
-            if ("Time:01:00".equals(fi)){
-            
+        if (easy) {
+            if ("Time:01:00".equals(fi)) {
+                moveSpeedEasy = 6;
+            }
+            if ("Time:02:00".equals(fi)) {
+                moveSpeedEasy = 7;
+            }
+            if ("Time:03:00".equals(fi)) {
+                moveSpeedEasy = 8;
             }
         }
-        if(mediam){
-             if ("Time:01:00".equals(fi)){
-            
+        if (mediam) {
+            if ("Time:01:00".equals(fi)) {
+                moveSpeedMediam = 11;
+            }
+            if ("Time:02:00".equals(fi)) {
+                moveSpeedMediam = 12;
+            }
+            if ("Time:03:00".equals(fi)) {
+                moveSpeedMediam = 13;
             }
         }
-        if(hard){
-             if ("Time:01:00".equals(fi)){
-            
+        if (hard) {
+            if ("Time:01:00".equals(fi)) {
+                moveSpeedHard = 16;
+            }
+            if ("Time:02:00".equals(fi)) {
+                moveSpeedHard = 17;
+            }
+            if ("Time:03:00".equals(fi)) {
+                moveSpeedHard = 18;
             }
         }
-        if(maltiyPlayer){
-            if ("Time:01:00".equals(fi)){
-                if(Score>Score2){
-                    maltiyPlayer=false;
-                    left=true;
-                }
-                else if(Score==Score2){
-                    maltiyPlayer=false;
-                    home=true;
-                }
-                else{
-                    maltiyPlayer=false;
-                    Right=true;
+        if (maltiyPlayer) {
+            if ("Time:01:00".equals(fi)) {
+                if (Score > Score2) {
+                    maltiyPlayer = false;
+                    left = true;
+                } else if (Score == Score2) {
+                    maltiyPlayer = false;
+                    Draw = true;
+                } else {
+                    maltiyPlayer = false;
+                    Right = true;
                 }
             }
         }
@@ -158,59 +178,28 @@ public class Cheaken extends AnimListener implements GLEventListener, MouseListe
         renderer.draw(fi, 550, 620);
         renderer.endRendering();
     }
-        public void DrawScore() throws ParseException {
+
+    public void DrawScore() throws ParseException {
 
         String fi = "Score: " + Score + "                                     Live: " + counter;
         if (maltiyPlayer) {
             fi = "Score Of Player1: " + Score + "                           Score Of Player2: " + Score2;
         }
+        
         renderer.beginRendering(gldddd.getWidth(), gldddd.getHeight());
         renderer.draw(fi, 10, 600);
         renderer.endRendering();
     }
-public void DrawName() throws ParseException {
+
+    public void DrawName() throws ParseException {
         int score = this.Score;
-        String fi = "The Score Of "+name+" is "+score;
+        String fi = "The Score Of " + name + " is " + score;
         renderer1.beginRendering(gldddd.getWidth(), gldddd.getHeight());
         renderer1.draw(fi, 50, 50);
         renderer1.endRendering();
     }
 
-   public void squreOFsell2(GL gl, int index) {
-        gl.glEnable(GL.GL_BLEND);	// Turn Blending On
-        gl.glBindTexture(GL.GL_TEXTURE_2D, textureIndex[index]);
-
-        gl.glPushMatrix();
-        if (xOfSell2 <= 350) {
-            xOfSell2 = 350;
-        }
-        if (xOfSell2 >= 600) {
-            xOfSell2 = 600;
-        }
-        gl.glTranslated(xOfSell2, 50, 0);
-
-        gl.glBegin(GL.GL_QUADS);
-
-        // Front Face
-        gl.glTexCoord2f(0.0f, 0.0f);
-        gl.glVertex3f(0f, 0f, -1.0f);
-
-        gl.glTexCoord2f(1.0f, 0.0f);
-        gl.glVertex3f(100, 0f, -1.0f);
-
-        gl.glTexCoord2f(1.0f, 1.0f);
-        gl.glVertex3f(100f, 70, -1.0f);
-
-        gl.glTexCoord2f(0.0f, 1.0f);
-        gl.glVertex3f(0f, 70, -1.0f);
-
-        gl.glEnd();
-        gl.glPopMatrix();
-
-        gl.glDisable(GL.GL_BLEND);
-    }
-
- public void squreOFsell(GL gl, int index) {
+    public void squreOFsell(GL gl, int index) {
         gl.glEnable(GL.GL_BLEND);	// Turn Blending On
         gl.glBindTexture(GL.GL_TEXTURE_2D, textureIndex[index]);
 
@@ -249,9 +238,43 @@ public void DrawName() throws ParseException {
         gl.glDisable(GL.GL_BLEND);
     }
 
-    private int rand() {
+    public void squreOFsell2(GL gl, int index) {
+        gl.glEnable(GL.GL_BLEND);	// Turn Blending On
+        gl.glBindTexture(GL.GL_TEXTURE_2D, textureIndex[index]);
+
+        gl.glPushMatrix();
+        if (xOfSell2 <= 350) {
+            xOfSell2 = 350;
+        }
+        if (xOfSell2 >= 600) {
+            xOfSell2 = 600;
+        }
+        gl.glTranslated(xOfSell2, 50, 0);
+
+        gl.glBegin(GL.GL_QUADS);
+
+        // Front Face
+        gl.glTexCoord2f(0.0f, 0.0f);
+        gl.glVertex3f(0f, 0f, -1.0f);
+
+        gl.glTexCoord2f(1.0f, 0.0f);
+        gl.glVertex3f(100, 0f, -1.0f);
+
+        gl.glTexCoord2f(1.0f, 1.0f);
+        gl.glVertex3f(100f, 70, -1.0f);
+
+        gl.glTexCoord2f(0.0f, 1.0f);
+        gl.glVertex3f(0f, 70, -1.0f);
+
+        gl.glEnd();
+        gl.glPopMatrix();
+
+        gl.glDisable(GL.GL_BLEND);
+    }
+
+    private int rand(int i) {
         Random rand = new Random();
-        return rand.nextInt(3);
+        return rand.nextInt(i + 1);
     }
 
     public void squreOFegg(GL gl, int index) {
@@ -341,7 +364,8 @@ public void DrawName() throws ParseException {
 
         gl.glDisable(GL.GL_BLEND);
     }
-       public void squreOFegg2(GL gl, int index) {
+
+    public void squreOFegg2(GL gl, int index) {
         gl.glEnable(GL.GL_BLEND);	// Turn Blending On
         gl.glBindTexture(GL.GL_TEXTURE_2D, textureIndex[index]);
 
@@ -350,7 +374,7 @@ public void DrawName() throws ParseException {
                 number2 = rand(2);
                 eggy2 = 450;
             }
-            Score2=Score2+10;
+            Score2 = Score2 + 10;
         }
         if (eggy2 <= 0) {
             if (maltiyPlayer) {
@@ -385,6 +409,10 @@ public void DrawName() throws ParseException {
         gl.glDisable(GL.GL_BLEND);
     }
 
+    public Cheaken(String name) {
+        this.name = name;
+    }
+
     public void squreOfHome(GL gl, int index) {
         gl.glEnable(GL.GL_BLEND);	// Turn Blending On
         gl.glBindTexture(GL.GL_TEXTURE_2D, textureIndex[index]);
@@ -411,7 +439,7 @@ public void DrawName() throws ParseException {
 
         gl.glDisable(GL.GL_BLEND);
     }
-   
+
     @Override
     public void init(GLAutoDrawable gld) {
         GL gl = gld.getGL();
@@ -420,7 +448,7 @@ public void DrawName() throws ParseException {
         gl.glMatrixMode(GL.GL_PROJECTION);
 //        gl.glOrtho(-450, 450, -250, 250, -1.0, 1.0);
         gl.glOrtho(0, 700, 0, 700, -1.0, 1.0);
-        
+
         try {
             music = new FileInputStream(new File("Music//chicken dance song.wav"));
             audios = new AudioStream(music);
@@ -455,8 +483,6 @@ public void DrawName() throws ParseException {
             }
         }
     }
-  
-    
 
     @Override
     public void display(GLAutoDrawable gld) {
@@ -465,11 +491,14 @@ public void DrawName() throws ParseException {
             GL gl = gld.getGL();
             gl.glClear(GL.GL_COLOR_BUFFER_BIT);       //Clear The Screen And The Depth Buffer
             handleKeyPress();
-            if(left){
+            if (left) {
                 squreOfHome(gl, 12);
             }
-            if(Right){
+            if (Right) {
                 squreOfHome(gl, 13);
+            }
+            if (Draw) {
+                squreOfHome(gl, 14);
             }
             if (end1) {
                 squreOfHome(gl, 9);
@@ -486,6 +515,8 @@ public void DrawName() throws ParseException {
 
             if (home) {
                 squreOfHome(gl, 0);
+                Score=0;
+                Score2=0;
             }
             if (singlePlayer) {
                 squreOfHome(gl, 5);
@@ -578,11 +609,12 @@ public void DrawName() throws ParseException {
         mx = e.getX();
         my = e.getY();
         System.out.println(mx + " " + my);
-        if (left || Right) {
-            if ((mx > 509 && mx < 645) && (my > (524) && my < (594))) {
+        if (left || Right || Draw) {
+            if ((mx > 447 && mx < 610) && (my > (527) && my < (585))) {
                 System.out.println("return");
                 left = false;
                 Right = false;
+                Draw = false;
                 home = true;
             }
         }
@@ -656,18 +688,37 @@ public void DrawName() throws ParseException {
 
     public void handleKeyPress() {
 
-        if (isKeyPressed(KeyEvent.VK_LEFT)) {
-            xOfSell = xOfSell - 10;
+        if (isKeyPressed(KeyEvent.VK_A)) {
+            xOfSell = xOfSell - 50;
         }
-        if (isKeyPressed(KeyEvent.VK_RIGHT)) {
-            xOfSell = xOfSell + 10;
+        if (isKeyPressed(KeyEvent.VK_D)) {
+            xOfSell = xOfSell + 50;
         }
-        if (isKeyPressed(KeyEvent.VK_DOWN)) {
+        if (maltiyPlayer) {
+            if (isKeyPressed(KeyEvent.VK_LEFT)) {
+                xOfSell2 = xOfSell2 - 50;
+            }
+            if (isKeyPressed(KeyEvent.VK_RIGHT)) {
+                xOfSell2 = xOfSell2 + 50;
+            }
+        } else {
+            if (hard) {
+                if (isKeyPressed(KeyEvent.VK_LEFT)) {
+                    xOfSell = xOfSell - 50;
+                }
+                if (isKeyPressed(KeyEvent.VK_RIGHT)) {
+                    xOfSell = xOfSell + 50;
+                }
+            } else {
+                if (isKeyPressed(KeyEvent.VK_LEFT)) {
+                    xOfSell = xOfSell - 30;
+                }
+                if (isKeyPressed(KeyEvent.VK_RIGHT)) {
+                    xOfSell = xOfSell + 30;
+                }
+            }
+        }
 
-        }
-        if (isKeyPressed(KeyEvent.VK_UP)) {
-
-        }
     }
 
     @Override
@@ -694,8 +745,8 @@ public void DrawName() throws ParseException {
         this.glc = glc;
     }
     GLCanvas glc;
-}
+
     public static void main(String[] args) {
-        new frame().setVisible(true);
+        new checkentwo().setVisible(true);
     }
 }
