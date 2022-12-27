@@ -465,17 +465,72 @@ public void DrawName() throws ParseException {
             GL gl = gld.getGL();
             gl.glClear(GL.GL_COLOR_BUFFER_BIT);       //Clear The Screen And The Depth Buffer
             handleKeyPress();
+            if(left){
+                squreOfHome(gl, 12);
+            }
+            if(Right){
+                squreOfHome(gl, 13);
+            }
+            if (end1) {
+                squreOfHome(gl, 9);
+                DrawName();
+            }
+            if (end2) {
+                squreOfHome(gl, 10);
+                DrawName();
+            }
+            if (end3) {
+                squreOfHome(gl, 11);
+                DrawName();
+            }
+
             if (home) {
                 squreOfHome(gl, 0);
             }
             if (singlePlayer) {
+                squreOfHome(gl, 5);
+            }
+            if (easy) {
                 squreOfHome(gl, 1);
                 squreOFegg(gl, 3);
                 squreOFsell(gl, 2);
                 DrawTime();
+                DrawScore();
+                if (counter <= 0) {
+                    easy = false;
+                    end1 = true;
+                }
+            }
+            if (mediam) {
+                squreOfHome(gl, 6);
+                squreOFegg(gl, 3);
+                squreOFsell(gl, 2);
+                DrawTime();
+                DrawScore();
+                if (counter <= 0) {
+                    mediam = false;
+                    end2 = true;
+                }
+            }
+            if (hard) {
+                squreOfHome(gl, 7);
+                squreOFegg(gl, 3);
+                squreOFsell(gl, 2);
+                DrawTime();
+                DrawScore();
+                if (counter <= 0) {
+                    hard = false;
+                    end3 = true;
+                }
             }
             if (maltiyPlayer) {
-
+                squreOfHome(gl, 8);
+                squreOFegg(gl, 3);
+                squreOFsell(gl, 2);
+                squreOFegg2(gl, 3);
+                squreOFsell2(gl, 2);
+                DrawTime();
+                DrawScore();
             }
             if (info) {
                 squreOfHome(gl, 4);
