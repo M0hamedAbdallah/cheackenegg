@@ -8,18 +8,16 @@ import javax.swing.*;
 //import checken.AnimGLEventListener3;
 
 public class STart extends JFrame {
-
+    static int y =700;
+    static int x =700;
    
+    
 
-    public static void main(String[] args) {
-        new STart(new Cheaken());
-    }
-
-    public STart(AnimListener aListener) {
+    public STart(AnimListener aListener,String name) {
         GLCanvas glcanvas;
         Animator animator;
-
-        Cheaken md = new Cheaken();
+        
+        Cheaken md = new Cheaken(name);
         glcanvas = new GLCanvas();
 
         glcanvas.addGLEventListener(md);
@@ -38,7 +36,7 @@ public class STart extends JFrame {
         
         setTitle("Anim Test");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(700, 700);
+        setSize(x, y);
         setLocationRelativeTo(null);
         setVisible(true);
         setFocusable(true);
